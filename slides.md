@@ -1,73 +1,102 @@
 ---
 # try also 'default' to start simple
-theme: seriph
+theme: default
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
-# some information about your slides, markdown enabled
-title: Welcome to Slidev
+# apply any windi css classes to the current slide
+class: 'text-center text-white bg-black'
+# https://sli.dev/custom/highlighters.html
+highlighter: shiki
+# show line numbers in code blocks
+lineNumbers: false
+# some information about the slides, markdown enabled
 info: |
   ## Slidev Starter Template
   Presentation slides for developers.
 
   Learn more at [Sli.dev](https://sli.dev)
-# apply any unocss classes to the current slide
-class: text-center
-# https://sli.dev/custom/highlighters.html
-highlighter: shiki
-# https://sli.dev/guide/drawing
+# persist drawings in exports and build
 drawings:
   persist: false
-# slide transition: https://sli.dev/guide/animations#slide-transitions
-transition: slide-left
-# enable MDC Syntax: https://sli.dev/guide/syntax#mdc-syntax
-mdc: true
+# use UnoCSS (experimental)
+css: unocss
 ---
 
-# Welcome to Slidev
+<div class="flex relative justify-center py-12">
+  <div id='turbo-img'></div>
+  <div id='turbo-bg'></div>
+  <img class='relative z-10' src='https://turbo.build/images/docs/repo/repo-hero-logo-dark.svg' />
+</div>
 
-Presentation slides for developers
+# Welcome to Turborepo
 
-<div class="pt-12">
+<div class='max-w-sm mx-auto text-gray-400'>A high-performance build system for JavaScript and TypeScript codebases</div>
+
+<div class="pt-12 text-gray-600">
   <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
     Press Space for next page <carbon:arrow-right class="inline"/>
   </span>
-</div>
-
-<div class="abs-br m-6 flex gap-2">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" alt="GitHub" title="Open in GitHub"
-    class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon-logo-github />
-  </a>
 </div>
 
 <!--
 The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
 -->
 
+<style>
+  #turbo-img {
+    border-radius: 9999px;
+    width: 128px;
+    height: 128px;
+    position: absolute;
+    top: 20%;
+    left: 42.5%;
+    filter: blur(32px);
+    background: conic-gradient(
+      from 180deg at 50% 50%,
+      #2a8af6 0deg,
+      #a853ba 180deg,
+      #e92a67 1turn
+    );
+  }
+  #turbo-bg {
+    opacity: 0.2;
+    border-radius: 9999px;
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top: -45%;
+    left: 20%;
+    mix-blend-mode: normal;
+    filter: blur(75px);
+    will-change: filter;
+    background: conic-gradient(
+      from 180deg at 50% 50%,
+      #2a8af6 0deg,
+      #a853ba 180deg,
+      #e92a67 1turn
+    );
+  }
+</style>
+
 ---
-transition: fade-out
+class: 'text-white bg-black'
+css: unocss
 ---
 
-# What is Slidev?
+# **Why is Turborepo?**
 
-Slidev is a slides maker and presenter designed for developers, consist of the following features
+- **Incremental builds** - Building once is painful enough, Turborepo will remember what you've built and skip the stuff that's already been computed.
 
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - theme can be shared and used with npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embedding Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export into PDF, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - anything possible on a webpage
+- **Content-aware hashing** - Turborepo looks at the contents of your files, not timestamps to figure out what needs to be built.
+
+- **Parallel execution** - Execute builds using every core at maximum parallelism without wasting idle CPUs.
+
+- **Remote Caching** - Share a remote build cache with your teammates and CI/CD for even faster builds.
 
 <br>
 <br>
 
-Read more about [Why Slidev?](https://sli.dev/guide/why)
+Read more about [Why Turborepo?](https://turbo.build/repo)
 
 <!--
 You can have `style` tag in markdown to override the style for the current page.
@@ -77,7 +106,7 @@ Learn more: https://sli.dev/guide/syntax#embedded-styles
 <style>
 h1 {
   background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-image: linear-gradient(180deg, #4EC5D4 100%, #146b8c 10%);
   background-size: 100%;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -86,552 +115,160 @@ h1 {
 }
 </style>
 
-<!--
-Here is another comment.
--->
-
 ---
-transition: slide-up
-level: 2
+class: 'bg-black text-white'
+css: unocss
 ---
 
-# Navigation
+# **Caching tasks**
 
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
+- Every JavaScript or TypeScript codebase will need to run package.json scripts, like `build`, `test` and `lint`. In Turborepo, we call these **tasks**.
 
-## Keyboard Shortcuts
+- Turborepo can cache the results and logs of your tasks - leading to enormous speedups for slow tasks.
 
-|     |     |
-| --- | --- |
-| <kbd>right</kbd> / <kbd>space</kbd>| next animation or slide |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd> | previous slide |
-| <kbd>down</kbd> | next slide |
+<v-click>
 
-<!-- https://sli.dev/guide/animations.html#click-animations -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-  alt=""
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
+```ts
+@koffi/sign:build: build/assets/vendor-NRf-pVlz.js                             162.44 kB │ gzip:  52.89 kB
+@koffi/sign:build: build/assets/index-GzbzsB0-.js                              162.49 kB │ gzip:  49.38 kB
+@koffi/sign:build: build/assets/chart.js-Y8bwA105.js                           164.93 kB │ gzip:  57.50 kB
+@koffi/sign:build: build/assets/@koffi/picker-o26WmqQi.js                      291.87 kB │ gzip:  71.94 kB
+@koffi/sign:build: build/assets/react-pdf-FkfKBID5.js                          337.23 kB │ gzip:  94.18 kB
+@koffi/sign:build: build/assets/@koffi/pdf-La5ekmQP.js                         471.69 kB │ gzip: 129.52 kB
+@koffi/sign:build: ✓ built in 6.70s
 
----
-layout: two-cols
-layoutClass: gap-16
----
+ Tasks:    72 successful, 72 total
+Cached:    71 cached, 72 total
+  Time:    7.727s 
 
-# Table of contents
-
-You can use the `Toc` component to generate a table of contents for your slides:
-
-```html
-<Toc minDepth="1" maxDepth="1"></Toc>
 ```
+</v-click>
 
-The title will be inferred from your slide content, or you can override it with `title` and `level` in your frontmatter.
 
-::right::
-
-<Toc v-click minDepth="1" maxDepth="2"></Toc>
-
----
-layout: image-right
-image: https://cover.sli.dev
----
-
-# Code
-
-Use code snippets and get the highlighting directly, and even types hover![^1]
-
-```ts {all|5|7|7-8|10|all} twoslash
-// TwoSlash enables TypeScript hover information
-// and errors in markdown code blocks
-// More at https://shiki.style/packages/twoslash
-
-import { computed, ref } from 'vue'
-
-const count = ref(0)
-const doubled = computed(() => count.value * 2)
-
-doubled.value = 2
-```
-
-<arrow v-click="[4, 5]" x1="350" y1="310" x2="195" y2="334" color="#953" width="2" arrowSize="1" />
-
-<!-- This allow you to embed external code blocks -->
-<<< @/snippets/external.ts#snippet
-
-<!-- Footer -->
-[^1]: [Learn More](https://sli.dev/guide/syntax.html#line-highlighting)
-
-<!-- Inline style -->
 <style>
-.footnotes-sep {
-  @apply mt-5 opacity-10;
+p code {
+  background-color: #6c6a6a;
 }
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
+.highlighted {
+  background-color: #f8f8f8;
 }
 </style>
 
-<!--
-Notes can also sync with clicks
-
-[click] This will be highlighted after the first click
-
-[click] Highlighted with `count = ref(0)`
-
-[click:3] Last click (skip two clicks)
--->
-
 ---
-level: 2
+class: 'bg-black text-white'
+css: unocss
 ---
 
-# Shiki Magic Move
-
-Powered by [shiki-magic-move](https://shiki-magic-move.netlify.app/), Slidev supports animations across multiple code snippets.
-
-Add multiple code blocks and wrap them with <code>````md magic-move</code> (four backticks) to enable the magic move. For example:
-
-````md magic-move
-```ts {*|2|*}
-// step 1
-const author = reactive({
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-})
-```
-
-```ts {*|1-2|3-4|3-4,8}
-// step 2
-export default {
-  data() {
-    return {
-      author: {
-        name: 'John Doe',
-        books: [
-          'Vue 2 - Advanced Guide',
-          'Vue 3 - Basic Guide',
-          'Vue 4 - The Mystery'
-        ]
-      }
-    }
-  }
-}
-```
-
-```ts
-// step 3
-export default {
-  data: () => ({
-    author: {
-      name: 'John Doe',
-      books: [
-        'Vue 2 - Advanced Guide',
-        'Vue 3 - Basic Guide',
-        'Vue 4 - The Mystery'
-      ]
-    }
-  })
-}
-```
-
-Non-code blocks are ignored.
-
-```vue
-<!-- step 4 -->
-<script setup>
-const author = {
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-}
-</script>
-```
-````
-
----
-
-# Components
+# **Missing the cache**
 
 <div grid="~ cols-2 gap-4">
 <div>
 
-You can use Vue components directly inside your slides.
+Each task in your codebase has **inputs** and **outputs**.
 
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
+- A build task might have source files as inputs and outputs logs to `stderr` and `stdout` as well as bundled files.
 
-```html
-<Counter :count="10" />
-```
+- A `lint` or `test` task might have source files as inputs and outputs logs to `stdout` and `stderr`.
 
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
+Let's say you run a `build` task with Turborepo using `turbo run build`:
 
 </div>
 <div>
 
-```html
-<Tweet id="1390115482657726468" />
-```
-
-<Tweet id="1390115482657726468" scale="0.65" />
+<img src='https://turbo.build/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcache-miss.21d45e92.png&w=3840&q=75&dpl=dpl_9S8Sn3R13VwbGE6foKG3PqsBY14T'/>
 
 </div>
 </div>
 
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
+<div v-click class='px-5 py-0.5 rounded mt-5 bg-blue'>
 
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
-
----
-class: px-20
----
-
-# Themes
-
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
-
-<div grid="~ cols-2 gap-2" m="t-2">
-
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true" alt="">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true" alt="">
+Turborepo takes a lot of information into account when creating the hash: the dependency graph, tasks it depends on, source files, environment variables, and more!
 
 </div>
 
-Read more about [How to use a theme](https://sli.dev/themes/use.html) and
-check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
-
----
-
-# Clicks Animations
-
-You can add `v-click` to elements to add a click animation.
-
-<div v-click>
-
-This shows up when you click the slide:
-
-```html
-<div v-click>This shows up when you click the slide.</div>
-```
-
-</div>
-
-<br>
-
-<v-click>
-
-The <span v-mark.red="3"><code>v-mark</code> directive</span>
-also allows you to add
-<span v-mark.circle.orange="4">inline marks</span>
-, powered by [Rough Notation](https://roughnotation.com/):
-
-```html
-<span v-mark.underline.orange>inline markers</span>
-```
-
-</v-click>
-
-<div mt-20 v-click>
-
-[Learn More](https://sli.dev/guide/animations#click-animations)
-
-</div>
-
----
-
-# Motions
-
-Motion animations are powered by [@vueuse/motion](https://motion.vueuse.org/), triggered by `v-motion` directive.
-
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }"
-  :click-3="{ x: 80 }"
-  :leave="{ x: 1000 }"
->
-  Slidev
-</div>
-```
-
-<div class="w-60 relative">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-square.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-circle.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-triangle.png"
-      alt=""
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
+<style>
+p code {
+  background-color: #6c6a6a;
 }
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 30, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn More](https://sli.dev/guide/animations.html#motion)
-
-</div>
-
----
-
-# LaTeX
-
-LaTeX is supported out-of-box powered by [KaTeX](https://katex.org/).
-
-<br>
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$ {1|3|all}
-\begin{array}{c}
-
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
-= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
-
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
-
-\nabla \cdot \vec{\mathbf{B}} & = 0
-
-\end{array}
-$$
-
-<br>
-
-[Learn more](https://sli.dev/guide/syntax#latex)
-
----
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-4 gap-5 pt-4 -mb-6">
-
-```mermaid {scale: 0.5, alt: 'A simple sequence diagram'}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
-```
-
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
-```mermaid
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectiveness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
-```
-
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
-
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
-```
-
-</div>
-
-[Learn More](https://sli.dev/guide/syntax.html#diagrams)
-
----
-foo: bar
-dragPos:
-  square: 691,33,167,_,-16
----
-
-# Draggable Elements
-
-Double-click on the draggable elements to edit their positions.
-
-<br>
-
-###### Directive Usage
-
-```md
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-```
-
-<br>
-
-###### Component Usage
-
-```md
-<v-drag text-3xl>
-  <carbon:arrow-up />
-  Use the `v-drag` component to have a draggable container!
-</v-drag>
-```
-
-<v-drag pos="671,205,253,_,-15">
-  <div text-center text-3xl border border-main rounded>
-    Double-click me!
-  </div>
-</v-drag>
-
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-
----
-src: ./pages/multiple-entries.md
-hide: false
----
-
----
-
-# Monaco Editor
-
-Slidev provides built-in Monaco Editor support.
-
-Add `{monaco}` to the code block to turn it into an editor:
-
-```ts {monaco}
-import { ref } from 'vue'
-import { emptyArray } from './external'
-
-const arr = ref(emptyArray(10))
-```
-
-Use `{monaco-run}` to create an editor that can execute the code directly in the slide:
-
-```ts {monaco-run}
-import { version } from 'vue'
-import { emptyArray, sayHello } from './external'
-
-sayHello()
-console.log(`vue ${version}`)
-console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-2)!], [1, 1]))
-```
+</style>
 
 ---
 layout: center
-class: text-center
+class: 'bg-black text-white'
+css: unocss
 ---
 
-# Learn More
+# **Hitting the cache**
 
-[Documentations](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
+<div class='flex justify-center mt-5'>
+
+<img src='https://turbo.build/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcache-hit.3bac1eb9.png&w=3840&q=75&dpl=dpl_9S8Sn3R13VwbGE6foKG3PqsBY14T' />
+
+</div>
+
+<div v-click class='px-5 py-0.5 mt-5 rounded bg-blue'>
+
+Restoring files and logs from the cache happens near-instantaneously. This can reduce your build times from minutes or hours down to seconds or milliseconds. Although specific results will vary depending on the shape and granularity of your codebase's dependency graph, most teams find that they can reduce their overall monthly build time by around 40-85% with Turborepo's caching.
+
+</div>
+
+<style>
+img {
+  width: 700px;
+  height: 250px;
+}
+</style>
+
+---
+class: 'bg-black text-white'
+css: unocss
+---
+
+# **Remote Caching**
+
+<div>
+
+Turborepo's task cache can save a lot of time by never doing the same work twice.
+
+But there's an issue - the **cache is local to your machine**. When you're working with a CI, this can result in a lot of duplicated work:
+
+</div>
+
+<img src='https://turbo.build/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flocal-caching.d097807f.png&w=3840&q=75&dpl=dpl_9S8Sn3R13VwbGE6foKG3PqsBY14T' />
+
+<style>
+img {
+  height: 320px;
+  width: 850px;
+}
+</style>
+
+---
+class: 'bg-black text-white space-y-5'
+css: unocss
+---
+
+# **A single, shared cache**
+
+<div grid='~ cols-2 gap-4'>
+<div>
+
+  What if you could share a single Turborepo cache across your entire team (and even your CI)?
+
+  By working with providers like Vercel, Turborepo can securely communicate with a remote cache - a cloud server that stores the results of your tasks.
+
+  This can save enormous amounts of time by **preventing duplicated work across your entire organization**.
+</div>
+
+<div class='mt-5 flex justify-center'>
+
+  <img src='https://turbo.build/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fremote-caching.5c826549.png&w=3840&q=75&dpl=dpl_9S8Sn3R13VwbGE6foKG3PqsBY14T' />
+
+</div>
+
+</div>
+
+
+<div v-click class='px-5 mt-5 py-3 bg-orange-200 rounded text-orange-700'>
+  Remote Caching is a powerful feature of Turborepo, but with great power comes great responsibility. Make sure you are caching correctly first and double check handling of environment variables. Please also remember Turborepo treats logs as artifacts, so be aware of what you are printing to the console.
+</div>
